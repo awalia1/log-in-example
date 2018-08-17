@@ -33,6 +33,14 @@ end
 
 post '/signup' do
  	p params
+ 	user = User.new(
+ 		email: params["email"],
+ 		name:params["fullname"],
+ 		password: params["password"]
+ 	)
+
+ 	user.save
+ 	redirect :account
 end
 
 require './models'
