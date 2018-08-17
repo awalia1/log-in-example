@@ -7,5 +7,6 @@ class CreateUsersTable < ActiveRecord::Migration[5.0]
       t.datetime :created_at
       t.datetime :updated_at
     end
+    add_index :users, :email, unique: true
   end
 end
