@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Account</title>
-</head>
-<body>
 	<h1>This is your account </h1>
-</body>
-</html>
+
+	<% if session[:user] == nil %>
+		<p> No one is logged in. </p>
+	<% elsif session[:user] != nil %>
+		<p> Welcome back, <%= session[:user] %> </p>
+	<% end %>
+

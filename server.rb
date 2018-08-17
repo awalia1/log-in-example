@@ -6,21 +6,29 @@ enable :sessions
 set :database, "sqlite3:log-in.sqlite3"
 
 get "/" do 
-	p "Sinatra is running"
+	erb :home
 end
 
 get "/login" do 
 	erb :login
 end
 
-post "/login" do
-	@email = params["email"]
-	@password = params["password"]
+post '/login' do
+	email = params["email"]
+ 	given_password = params["password"] 
 
-	p "Your email is, #{params['email']}"
-	p "Your email is, #{params['password']}"
+ 	# check if email exists
+ 	# check to see if the email has a password that matches the form password
+ 	# if they match, log in the user
 
-	redirect :account
+ 	user = User.find_by(email: email)
+ 	if user.password == given_password
+ 		session[:user] = "#{email}"
+		redirect :account
+ 	else
+ 		p "Invalid credentials"
+ 		redirect '/'
+ 	end
 end
 
 get '/account' do
@@ -40,7 +48,13 @@ post '/signup' do
  	)
 
  	user.save
- 	redirect :account
+ 	redirect :home
+end
+
+get '/logout' do
+	session[:user] = nil 
+	p "user has logged out"
+	redirect '/'
 end
 
 require './models'
