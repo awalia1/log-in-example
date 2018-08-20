@@ -3,10 +3,10 @@ class User < ActiveRecord::Base
 	include BCrypt
 
 	def password
-		@password || Password.new(password_hash)
+		@password ||= Password.new(password_hash)
 	end
 
-	def passsword=(new_password)
+	def password=(new_password)
 		@password = Password.create(new_password)
 		self.password_hash = @password
 	end
